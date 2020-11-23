@@ -54,7 +54,7 @@ func Parse(code string) []Node {
 }
 
 // Run code
-func Run(nodes []Node) []int {
+func Run(nodes []Node) ([]int, int) {
 	data := []int{0}
 	pointer := 0
 
@@ -117,7 +117,7 @@ func Run(nodes []Node) []int {
 
 	fmt.Println()
 
-	return data
+	return data, pointer
 }
 
 // RunCode runs a code
