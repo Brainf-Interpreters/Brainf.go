@@ -24,6 +24,18 @@ func Parse(code string) []Node {
 	var result []Node
 	i := 0
 
+	st := ""
+	for _, chr := range code {
+		if chr == '+' || chr == '-' ||
+			chr == '<' || chr == '>' ||
+			chr == '.' || chr == ',' ||
+			chr == '[' || chr == ']' {
+			st += string(chr)
+		}
+	}
+
+	code = st
+
 	for i < len(code) {
 		chr := code[i]
 
@@ -54,8 +66,8 @@ func Parse(code string) []Node {
 }
 
 // Run code
-func Run(nodes []Node) ([]int, int) {
-	data := []int{0}
+func Run(nodes []Node) (map[int]int, int) {
+	data := map[int]int{0: 0}
 	pointer := 0
 
 	i := 0
@@ -82,8 +94,9 @@ func Run(nodes []Node) ([]int, int) {
 			} else {
 				pointer++
 			}
-			if len(data) == pointer {
-				data = append(data, 0)
+			_, a := data[pointer]
+			if a == false {
+				data[pointer] = 0
 			}
 
 		case '<':
@@ -91,6 +104,10 @@ func Run(nodes []Node) ([]int, int) {
 				pointer = 255
 			} else {
 				pointer--
+			}
+			_, a := data[pointer]
+			if a == false {
+				data[pointer] = 0
 			}
 
 		case '.':
